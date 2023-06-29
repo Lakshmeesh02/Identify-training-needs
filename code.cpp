@@ -120,6 +120,16 @@ class manager {
         }
     }
 
+    void displayreport(vector <udet> &report) {
+        cout<<"Annual status: \n";
+        for(udet final: report) {
+            cout<<final.id<<' '<<final.name<<' '<<final.months<<'\n';
+            for(string skill:final.usercourses) 
+            cout<<skill<<' ';
+            cout<<'\n'; 
+            }
+    }
+
     
 };
 
@@ -226,7 +236,7 @@ int main()
                     man.approvewaiting(manager::waiting_list);
                 }
             }
-            //man.displayreport(manager::report);
+            man.displayreport(manager::report);
             userObjects.clear();
             break;
         }
