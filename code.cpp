@@ -32,10 +32,99 @@ typedef struct userdetails {
     int months;
 }udet;
 
+class manager {
+    string response;
 
+    public:
+    static vector <user> waiting_list; 
+    static vector <udet> report;
+    manager(vector <user> &Userobjects) {
+        if(Userobjects.size()==0){
+            cout<<"No requests..\n";
+            return;
+        }
+        cout<<"Requests:\n";
+        for(user i:Userobjects) {
+            cout<<i.name<<endl;
+            cin>>response;
+            bool alreadypresent=false;
+            if(response=="Y") {
+                for(udet &approvedperson:report) {
+                    cout<<approvedperson.name<<endl;
+                    if(approvedperson.name==i.name) {
+                        if(approvedperson.months+i.duration>12) {
+                            cout<<i.name<<" rejected\n";
+                            alreadypresent=true;
+                            break;
+                        }
+                        else {
+                            cout<<i.name<<" approved\n";
+                            approvedperson.usercourses.push_back(i.courseo);
+                            approvedperson.months+=i.duration;
+                            alreadypresent=true;
+                            break;
+                        }
+                    }
+                }
 
-//vector <user> manager:: waiting_list; 
-//vector<udet> manager::report;
+                if(alreadypresent) 
+                continue;
+                
+                udet approvedperson;
+                approvedperson.id=i.id;
+                approvedperson.name=i.name;
+                approvedperson.usercourses.push_back(i.courseo);
+                approvedperson.months=i.duration;
+                report.push_back(approvedperson);
+            }
+            else 
+            waiting_list.push_back(i);
+        }
+        
+    }
+
+    void approvewaiting(vector <user> &waiters) {
+        for(user i:waiters) {
+            cout<<i.name<<endl;
+            cin>>response;
+            bool alreadypresent=false;
+            if(response=="Y") {
+                for(udet &approvedperson:report) {
+                    cout<<approvedperson.name<<endl;
+                    if(approvedperson.name==i.name) {
+                        if(approvedperson.months+i.duration>12) {
+                            cout<<i.name<<" rejected\n";
+                            alreadypresent=true;
+                            break;
+                        }
+                        else {
+                            cout<<i.name<<" approved\n";
+                            approvedperson.usercourses.push_back(i.courseo);
+                            approvedperson.months+=i.duration;
+                            alreadypresent=true;
+                            break;
+                        }
+                    }
+                }
+
+                if(alreadypresent) 
+                continue;
+                
+                udet approvedperson;
+                approvedperson.id=i.id;
+                approvedperson.name=i.name;
+                approvedperson.usercourses.push_back(i.courseo);
+                approvedperson.months=i.duration;
+                report.push_back(approvedperson);
+            }
+        }
+    }
+
+    
+};
+
+vector <user> manager:: waiting_list; 
+vector<udet> manager::report;
 
 int main()
 {
@@ -125,6 +214,20 @@ int main()
                 cout << "ID: " << userObj.id << ", Name: " << userObj.name << ", Course: " << userObj.courseo << ", Duration: " << userObj.duration << " months" << endl;
             }
 
+            break;
+        }
+        case 3: {
+            manager man(userObjects);
+            string response;
+            if(manager::waiting_list.size()!=0) {
+                cout<<"Approve waiters?    ";
+                cin>>response;
+                if(response=="Y") {
+                    man.approvewaiting(manager::waiting_list);
+                }
+            }
+            //man.displayreport(manager::report);
+            userObjects.clear();
             break;
         }
         default:
