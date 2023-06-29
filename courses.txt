@@ -1,0 +1,7 @@
+DDCO 5
+WT 4 
+AFLL 5
+SDS 3
+DSA 7
+MPCA 4
+CN 7
