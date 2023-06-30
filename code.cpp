@@ -51,7 +51,6 @@ class manager {
             bool alreadypresent=false;
             if(response=="Y") {
                 for(udet &approvedperson:report) {
-                    cout<<approvedperson.name<<endl;
                     if(approvedperson.name==i.name) {
                         if(approvedperson.months+i.duration>12) {
                             cout<<i.name<<" rejected\n";
