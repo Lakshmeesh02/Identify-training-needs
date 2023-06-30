@@ -3,9 +3,16 @@
 #include <sstream>
 #include <vector>
 using namespace std;
-
+class user;
 vector<string> users;
 
+namespace training
+{
+    int login, no_months;
+    fstream new_file;
+    string course, username, cname;
+    void login1();
+}
 
 
 class user
@@ -51,6 +58,7 @@ class manager {
             bool alreadypresent=false;
             if(response=="Y") {
                 for(udet &approvedperson:report) {
+                   // cout<<approvedperson.name<<endl;
                     if(approvedperson.name==i.name) {
                         if(approvedperson.months+i.duration>12) {
                             cout<<i.name<<" rejected\n";
@@ -136,12 +144,8 @@ void displayreport(vector <udet> &report) {
 
 vector <user> manager:: waiting_list; 
 vector<udet> manager::report;
-
-int main()
+void training::login1()
 {
-    int login, no_months;
-    fstream new_file;
-    string course, username, cname;
     vector<user> userObjects;
 
     while (1)
@@ -245,4 +249,8 @@ int main()
         exit(0);
         }
     }
+}
+int main()
+{
+    training::login1();
 }
