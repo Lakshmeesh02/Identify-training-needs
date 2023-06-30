@@ -21,7 +21,7 @@ public:
         name = username;
         id = users.size();
         courseo = cname;
-        duration =dur;
+        duration=dur;
     }
 };
 
@@ -36,6 +36,7 @@ class manager {
     string response;
 
     public:
+    friend void displayreport(vector <udet> report);
     static vector <user> waiting_list; 
     static vector <udet> report;
     manager(vector <user> &Userobjects) {
@@ -90,7 +91,6 @@ class manager {
             bool alreadypresent=false;
             if(response=="Y") {
                 for(udet &approvedperson:report) {
-                    cout<<approvedperson.name<<endl;
                     if(approvedperson.name==i.name) {
                         if(approvedperson.months+i.duration>12) {
                             cout<<i.name<<" rejected\n";
@@ -102,6 +102,7 @@ class manager {
                             approvedperson.usercourses.push_back(i.courseo);
                             approvedperson.months+=i.duration;
                             alreadypresent=true;
+
                             break;
                         }
                     }
@@ -118,20 +119,21 @@ class manager {
                 report.push_back(approvedperson);
             }
         }
+        waiters.clear();
     }
+};
 
-    void displayreport(vector <udet> &report) {
+void displayreport(vector <udet> &report) {
         cout<<"Annual status: \n";
         for(udet final: report) {
-            cout<<final.id<<' '<<final.name<<' '<<final.months<<'\n';
+            cout<<"-----------------------------\n";
+            cout<<"ID: "<<final.id<<"\n"<<"Name: "<<final.name<<"\n"<<"Duration: "<<final.months<<"\n";
             for(string skill:final.usercourses) 
             cout<<skill<<' ';
             cout<<'\n'; 
             }
+            cout<<"\n";
     }
-
-    
-};
 
 vector <user> manager:: waiting_list; 
 vector<udet> manager::report;
@@ -232,11 +234,11 @@ int main()
             if(manager::waiting_list.size()!=0) {
                 cout<<"Approve waiters?    ";
                 cin>>response;
-                if(response=="Y") {
+                if(response=="Y" || response=="y") {
                     man.approvewaiting(manager::waiting_list);
                 }
             }
-            man.displayreport(manager::report);
+            displayreport(manager::report);
             userObjects.clear();
             break;
         }
